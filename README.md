@@ -1,6 +1,5 @@
 # TopMovies
-I worked on this project while completing the <a herf="https://www.udemy.com/architect-android-apps-with-mvp-pattern-rxjava-dagger-retrofit-junit/learn/v4/overview">
-rchitect Android apps with MVP, Dagger, Retrofit & RxJava</a> on Udemy.
+I worked on this project while completing the [Architect Android apps with MVP, Dagger, Retrofit & RxJava](https://www.udemy.com/architect-android-apps-with-mvp-pattern-rxjava-dagger-retrofit-junit/learn/v4/overview) on Udemy.
 
 The app displays a list of top rated movies in a RecyclerView.
 
