@@ -5,7 +5,8 @@
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".topmovies.TopMoviesActivity">
+    tools:context=".topmovies.TopMoviesActivity"
+    android:background="@android:color/darker_gray">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"

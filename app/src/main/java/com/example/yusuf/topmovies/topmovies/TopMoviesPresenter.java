@@ -1,8 +1,13 @@
 package com.example.yusuf.topmovies.topmovies;
 
 
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
+import com.example.yusuf.topmovies.R;
 import com.example.yusuf.topmovies.http.MovieApiService;
 import com.example.yusuf.topmovies.http.apimodel.TopRated;
 
@@ -28,6 +33,17 @@ public class TopMoviesPresenter implements TopMoviesActivityMVP.Presenter {
     @Override
     public void attachView(TopMoviesActivityMVP.View view) {
         this.view = view;
+    }
+
+    @Override
+    public void runLayoutAnimation(RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down);
+
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
     }
 
     @Override

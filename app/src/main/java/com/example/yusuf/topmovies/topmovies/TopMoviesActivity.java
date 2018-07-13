@@ -22,6 +22,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.AnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter;
 
 public class TopMoviesActivity extends AppCompatActivity implements TopMoviesActivityMVP.View {
 
@@ -57,18 +62,20 @@ public class TopMoviesActivity extends AppCompatActivity implements TopMoviesAct
         ButterKnife.bind(this);
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            Log.d(TAG, "onRefresh()");
             this.finish();
             Intent intent = new Intent(TopMoviesActivity.this, TopMoviesActivity.class);
             startActivity(intent);
         });
 
         listAdapter = new ListAdapter(resultList);
-        recyclerView.setAdapter(listAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        SlideInBottomAnimationAdapter slideInBottomAnimationAdapter = new SlideInBottomAnimationAdapter(listAdapter);
+        slideInBottomAnimationAdapter.setDuration(1000);
+        slideInBottomAnimationAdapter.setFirstOnly(false);
+        recyclerView.setAdapter(slideInBottomAnimationAdapter);
         GridLayoutManager layoutManager = new GridLayoutManager(TopMoviesActivity.this, 2);
         recyclerView.setLayoutManager(layoutManager);
 
+        //Infinite scroll
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -80,7 +87,6 @@ public class TopMoviesActivity extends AppCompatActivity implements TopMoviesAct
                     if (isRecyclerViewLoading) {
                         if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                             isRecyclerViewLoading = false;
-                            Log.v(TAG, "Last Item Wow !");
                             page = page + 1;
                             presenter.loadData(page);
                         }
@@ -102,8 +108,13 @@ public class TopMoviesActivity extends AppCompatActivity implements TopMoviesAct
 
     @Override
     public void updateData(List<Result> results) {
+        int itemCount = listAdapter.getItemCount();
         listAdapter.updateData(results);
-        listAdapter.notifyDataSetChanged();
+        for (int i = 0; i <= results.size() - 1; i++) {
+            listAdapter.notifyItemInserted(itemCount - 1);
+            itemCount++;
+        }
+
     }
 
     @Override
@@ -116,7 +127,6 @@ public class TopMoviesActivity extends AppCompatActivity implements TopMoviesAct
         swipeRefreshLayout.setRefreshing(isLoading);
         if (!isLoading && !isRecyclerViewLoading) {
             isRecyclerViewLoading = true;
-            //recyclerView.scrollToPosition(listAdapter.getItemCount() - 20);
         }
     }
 }

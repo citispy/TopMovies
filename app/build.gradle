@@ -66,4 +66,7 @@ dependencies {
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //Wasabeef RecyclerView animation
+    implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
 }

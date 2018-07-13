@@ -1,6 +1,8 @@
 package com.example.yusuf.topmovies.topmovies;
 
 
+import android.support.v7.widget.RecyclerView;
+
 import com.example.yusuf.topmovies.http.apimodel.Result;
 
 import java.util.List;
@@ -23,5 +25,7 @@ public interface TopMoviesActivityMVP {
         void detachView();
 
         void attachView(TopMoviesActivityMVP.View view);
+
+        void runLayoutAnimation(final RecyclerView recyclerView);
     }
 }
