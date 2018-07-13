@@ -110,11 +110,7 @@ public class TopMoviesActivity extends AppCompatActivity implements TopMoviesAct
     public void updateData(List<Result> results) {
         int itemCount = listAdapter.getItemCount();
         listAdapter.updateData(results);
-        for (int i = 0; i <= results.size() - 1; i++) {
-            listAdapter.notifyItemInserted(itemCount - 1);
-            itemCount++;
-        }
-
+        listAdapter.notifyItemInserted(itemCount);
     }
 
     @Override
