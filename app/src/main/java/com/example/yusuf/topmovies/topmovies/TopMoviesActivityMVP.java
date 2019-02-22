@@ -1,9 +1,11 @@
 package com.example.yusuf.topmovies.topmovies;
 
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.yusuf.topmovies.http.apimodel.Result;
+import com.example.yusuf.topmovies.http.apimodel.TopRated;
 
 import java.util.List;
 
@@ -16,6 +18,8 @@ public interface TopMoviesActivityMVP {
         void showSnackBar(String string);
 
         void setLoading(Boolean isLoading);
+
+        Context getViewContext();
     }
 
     interface Presenter {
@@ -27,5 +31,7 @@ public interface TopMoviesActivityMVP {
         void attachView(TopMoviesActivityMVP.View view);
 
         void runLayoutAnimation(final RecyclerView recyclerView);
+
+        void loadMovies(TopRated topRated);
     }
 }

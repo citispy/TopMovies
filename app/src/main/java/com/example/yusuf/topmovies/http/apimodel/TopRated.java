@@ -2,13 +2,14 @@
 package com.example.yusuf.topmovies.http.apimodel;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.example.yusuf.topmovies.http.apimodel.Result;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TopRated {
+public class TopRated implements Serializable {
 
     @SerializedName("page")
     @Expose

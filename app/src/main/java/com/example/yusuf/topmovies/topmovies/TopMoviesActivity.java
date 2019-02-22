@@ -116,6 +116,7 @@ public class TopMoviesActivity extends AppCompatActivity implements TopMoviesAct
         super.onDestroy();
         presenter.detachView();
 
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(getMoviesReceiver);
     }
 
     @Override
@@ -137,4 +138,17 @@ public class TopMoviesActivity extends AppCompatActivity implements TopMoviesAct
             isRecyclerViewLoading = true;
         }
     }
+
+    @Override
+    public Context getViewContext() {
+        return getApplicationContext();
+    }
+
+    private BroadcastReceiver getMoviesReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            TopRated topRated = (TopRated) intent.getSerializableExtra(GetMoviesJob.KEY_TOP_RATED);
+            presenter.loadMovies(topRated);
+        }
+    };
 }
