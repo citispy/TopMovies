@@ -1,11 +1,7 @@
 package com.example.yusuf.topmovies.topmovies;
 
-import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
-import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.yusuf.topmovies.R;
-import com.example.yusuf.topmovies.helper.MyDiffUtil;
 import com.example.yusuf.topmovies.http.apimodel.Result;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -25,7 +18,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
 
     private List<Result> list;
 
-    public ListAdapter(List<Result> list) {
+    ListAdapter(List<Result> list) {
         this.list = list;
     }
     @NonNull
@@ -45,8 +38,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
                 .into(holder.imageView);
 
         String title = list.get(position).getTitle();
-        holder.itemName.setText(title);
-        Log.d("ListAdapter", "Poster path: " + list.get(position).getPosterPath());
+        String year = list.get(position).getReleaseDate().substring(0, 4);
+        String itemText = title + " (" + year + ")";
+        holder.itemName.setText(itemText);
     }
 
     @Override
@@ -55,8 +49,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
     }
 
     public void updateData(List<Result> newList) {
-//        MyDiffUtil diffUtil = new MyDiffUtil(list, newList);
-//        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtil);
+        //MyDiffUtil diffUtil = new MyDiffUtil(list, newList);
+        //DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtil);
         list.addAll(newList);
         //diffResult.dispatchUpdatesTo(this);
     }

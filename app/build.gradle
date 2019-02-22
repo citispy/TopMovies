@@ -69,4 +69,7 @@ dependencies {
 
     //Wasabeef RecyclerView animation
     implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
+
+    //Android Priority Job Queue
+    implementation 'com.birbit:android-priority-jobqueue:2.0.1'
 }

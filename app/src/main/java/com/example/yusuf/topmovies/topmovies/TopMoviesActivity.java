@@ -1,7 +1,11 @@
 package com.example.yusuf.topmovies.topmovies;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +17,8 @@ import android.view.ViewGroup;
 
 import com.example.yusuf.topmovies.R;
 import com.example.yusuf.topmovies.http.apimodel.Result;
+import com.example.yusuf.topmovies.http.apimodel.TopRated;
+import com.example.yusuf.topmovies.jobs.GetMoviesJob;
 import com.example.yusuf.topmovies.root.App;
 
 import java.util.ArrayList;
@@ -67,6 +73,15 @@ public class TopMoviesActivity extends AppCompatActivity implements TopMoviesAct
             startActivity(intent);
         });
 
+        setupRecyclerView();
+
+        presenter.attachView(this);
+        presenter.loadData(page);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(getMoviesReceiver, new IntentFilter(GetMoviesJob.ACTION_GET_MOVIES));
+    }
+
+    private void setupRecyclerView() {
         listAdapter = new ListAdapter(resultList);
         SlideInBottomAnimationAdapter slideInBottomAnimationAdapter = new SlideInBottomAnimationAdapter(listAdapter);
         slideInBottomAnimationAdapter.setDuration(1000);
@@ -94,9 +109,6 @@ public class TopMoviesActivity extends AppCompatActivity implements TopMoviesAct
                 }
             }
         });
-
-        presenter.attachView(this);
-        presenter.loadData(page);
     }
 
     @Override
